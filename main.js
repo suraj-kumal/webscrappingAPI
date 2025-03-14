@@ -1,94 +1,3 @@
-// const puppeteer = require("puppeteer");
-// const fs = require("fs");
-// const { scrapeDaraz } = require("./daraz");
-// const { scrapeHukut } = require("./hukut");
-// const { scrapeNeoStore } = require("./neostore");
-
-// async function scrapeMultipleSites(keyword) {
-//   const startTime = performance.now();
-
-//   console.log(`Starting multi-site scraping for "${keyword}"...`);
-//   console.log("---------------------------------------------");
-
-//   const browser = await puppeteer.launch({
-//     headless: true,
-//     defaultViewport: null,
-//     args: ["--window-size=800,600"],
-//   });
-
-//   try {
-//     const [darazProducts, hukutProducts, neoStoreProducts] = await Promise.all([
-//       scrapeDaraz(browser, keyword).catch((err) => {
-//         console.error("Error in Daraz scraper:", err);
-//         return [];
-//       }),
-//       scrapeHukut(browser, keyword).catch((err) => {
-//         console.error("Error in Hukut scraper:", err);
-//         return [];
-//       }),
-//       scrapeNeoStore(browser, keyword).catch((err) => {
-//         console.error("Error in NeoStore scraper:", err);
-//         return [];
-//       }),
-//     ]);
-
-//     const allProducts = [
-//       ...darazProducts,
-//       ...hukutProducts,
-//       ...neoStoreProducts,
-//     ];
-
-//     const organizedResults = {
-//       all: allProducts,
-//       bySource: {
-//         Daraz: darazProducts,
-//         Hukut: hukutProducts,
-//         NeoStore: neoStoreProducts,
-//       },
-//       stats: {
-//         totalCount: allProducts.length,
-//         sourceCounts: {
-//           Daraz: darazProducts.length,
-//           Hukut: hukutProducts.length,
-//           NeoStore: neoStoreProducts.length,
-//         },
-//       },
-//     };
-//     console.log("---------------------------------------------");
-//     console.log("Scraping completed. Results summary:");
-//     console.log(`- Total products: ${allProducts.length}`);
-//     console.log(`- Daraz: ${darazProducts.length} products`);
-//     console.log(`- Hukut: ${hukutProducts.length} products`);
-//     console.log(`- NeoStore: ${neoStoreProducts.length} products`);
-
-//     return organizedResults;
-//   } catch (err) {
-//     console.error("Error in multi-site scraping:", err);
-//   } finally {
-//     console.log("---------------------------------------------");
-//     console.log("Closing browser...");
-//     await browser.close();
-
-//     const endTime = performance.now();
-//     const timeTaken = (endTime - startTime) / 1000;
-//     console.log(`Total time taken: ${timeTaken.toFixed(2)} seconds`);
-//   }
-// }
-
-// if (require.main === module) {
-//   const keyword = process.argv[2] || "laptop";
-//   scrapeMultipleSites(keyword)
-//     .then(() => {
-//       console.log("Multi-site scraping completed successfully.");
-//       process.exit(0);
-//     })
-//     .catch((err) => {
-//       console.error("Fatal error in multi-site scraping:", err);
-//       process.exit(1);
-//     });
-// }
-
-// module.exports = { scrapeMultipleSites };
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const { scrapeDaraz } = require("./daraz");
@@ -131,7 +40,7 @@ async function scrapeMultipleSites(keyword) {
   const browser = await puppeteer.launch({
     headless: true,
     defaultViewport: null,
-    args: ["--window-size=800,600"],
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
   try {
