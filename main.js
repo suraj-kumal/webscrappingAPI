@@ -38,9 +38,16 @@ async function scrapeMultipleSites(keyword) {
   console.log("---------------------------------------------");
 
   const browser = await puppeteer.launch({
-    headless: 'new', // or true
-    defaultViewport: null,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: [
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+      "--disable-software-rasterizer",
+      "--disable-background-timer-throttling",
+      "--disable-backgrounding-occluded-windows",
+      "--disable-breakpad",
+      "--no-first-run",
+    ],
+    headless: "new",
   });
 
   try {
